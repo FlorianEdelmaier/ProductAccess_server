@@ -1,0 +1,30 @@
+{
+  "name": "product-access-server",
+  "version": "1.0.0",
+  "description": "fake implementation",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlorianEdelmaier/ProductAccess_server.git"
+  },
+  "author": "Florian Edelamier <florian.edelmaier@gmail.com> (http://edelmaier.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FlorianEdelmaier/ProductAccess_server/issues"
+  },
+  "homepage": "https://github.com/FlorianEdelmaier/ProductAccess_server#readme",
+  "dependencies": {
+    "args": "2.4.1",
+    "body-parser": "1.17.1",
+    "compression": "1.6.2",
+    "cors": "2.8.3",
+    "express": "4.15.2",
+    "morgan": "1.8.1",
+    "swagger-jsdoc": "1.9.2",
+    "uuid": "3.0.1"
+  }
+}
