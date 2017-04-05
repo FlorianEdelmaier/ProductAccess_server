@@ -1,6 +1,6 @@
 'use strict';
 const pjson = require('./package.json');
-const PORT = 3001;
+const PORT = 3000;
 
 module.exports = {
     "VERSION": pjson.version,

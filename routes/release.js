@@ -2,7 +2,8 @@
 const db = require('./db');
 const router = require('express').Router();
 const uuid = require('uuid');
-const fs = require('fs');
+const Validator = require('combine-validators');
+const validations = Validator.validations;
 
 /**
  * @swagger
@@ -50,8 +51,15 @@ const fs = require('fs');
  */
 
 router.get('/:productId', (req, res, next) => {
-    const releases = db.getReleasesForProduct(req.params.productId);
-    res.json(releases);
+    const v = new Validator();
+    v.check(validations.isMandatory, validations.isUUID)(req.params, 'productId', 'ProductID not valid');
+    if(v.hasErrors()) { 
+        res.status(400).json({ errors: v.errors });
+    }
+    else {
+        const releases = db.getReleasesForProduct(req.params.productId);
+        res.json(releases);
+    }
 });
 
 /**
@@ -94,20 +102,28 @@ router.get('/:productId', (req, res, next) => {
  *              $ref: '#/definitions/Release'
  */
 router.post('/', (req, res, next) => {
-    const separators = ['\n', ','];
-    let release = {
-        id: uuid.v4(),
-        releaseDate: req.body.releaseDate,
-        version: req.body.version,
-        notes: !Array.isArray(req.body.notes) ? req.body.notes.split(new RegExp(separators.join('|'), 'g')) : req.body.notes
-    };
-    console.log(release);
-    try
-    {
-       const returnVal = db.addReleaseToProduct(req.body.productId, release);
-        res.status(200).json(returnVal);
+    const v = new Validator();
+    v.check(validations.isMandatory, validations.isUUID)(req.body, 'productId', 'ProductID not valid');
+    v.check(validations.isMandatory)(req.body, 'releaseDate', 'ReleaseData was not provided');
+    v.check(validations.isMandatory)(req.body, 'version', 'Version was not provided');
+    if(v.hasErrors()) { 
+        res.status(400).json({ errors: v.errors });
     }
-    catch(err) { next(err); }
-});
+    else {
+        const separators = ['\n', ','];
+        let release = {
+            id: uuid.v4(),
+            releaseDate: req.body.releaseDate,
+            version: req.body.version,
+            notes: !Array.isArray(req.body.notes) ? req.body.notes.split(new RegExp(separators.join('|'), 'g')) : req.body.notes
+        };
+        try
+        {
+            const returnVal = db.addReleaseToProduct(req.body.productId, release);
+            res.status(200).json(returnVal);
+        }
+        catch(err) { next(err); }
+    }
+    });
 
 module.exports = router
