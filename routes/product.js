@@ -1,5 +1,5 @@
 'use strict';
-const db = require('./../db.json');
+const db = require('./db');
 const router = require('express').Router();
 
 /**
@@ -40,15 +40,7 @@ const router = require('express').Router();
  *              $ref: '#/definitions/Product'
  */
 router.get('/', (req, res) => {
-    console.log(db.products[0].id);
-    const products = db.products.map(v => {
-        return {
-            id: v.id,
-            name: v.name,
-            description: v.description,
-            link: v.link
-        }
-    });
+    const products = db.getAllProducts();
     res.json(products);
 });
 

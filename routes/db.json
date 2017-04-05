@@ -1,0 +1,51 @@
+{
+    "products": [
+        {
+            "id": "95fd565a-5a8e-4bae-a20f-00dd37f1d5dd",
+            "name": "Product One",
+            "description": "Description of Product One",
+            "link": "http://google.com",
+            "releases": [
+                {
+                    "id": "0215e343-2cb9-4cb4-ab65-91ec5324c5db",
+                    "releaseDate": "2017-03-01",
+                    "version": "2017.3.2.123",
+                    "notes": [
+                        "Release note Product One 2.1",
+                        "Release note Product One 2.2",
+                        "Release note Product One 2.3",
+                        "Release note Product One 2.4"
+                    ]
+                },
+                {
+                    "id": "cd736bff-188d-43da-85c8-fefcca258e94",
+                    "releaseDate": "2017-01-01",
+                    "version": "2017.1.1.1",
+                    "notes": [
+                        "Release note Product One 1.1",
+                        "Release note Product One 1.2",
+                        "Release note Product One 1.3"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "23bf6a16-0fad-4c75-beb5-d782235cbeeb",
+            "name": "Product Two",
+            "description": "Description of Product Two",
+            "link": "http://google.com",
+            "releases": [
+                {
+                    "id": "f2e87bdb-9502-4501-be42-7752309b8acd",
+                    "releaseDate": "2017-01-01",
+                    "version": "2017.1.1.7",
+                    "notes": [
+                        "Release note Product Two 1",
+                        "Release note Product Two 2"
+                    ]
+                }
+            ]
+        }
+    ]
+
+}

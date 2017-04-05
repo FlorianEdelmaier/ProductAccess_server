@@ -1,5 +1,5 @@
 'use strict';
-const db = require('./../db.json');
+const db = require('./db');
 const router = require('express').Router();
 const uuid = require('uuid');
 const fs = require('fs');
@@ -50,12 +50,7 @@ const fs = require('fs');
  */
 
 router.get('/:productId', (req, res, next) => {
-    let releases = [];
-    for(let i=0; i < db.products.length; i++) {
-        if(db.products[i].id === req.params.productId) {
-            releases = db.products[i].releases;
-        }
-    }
+    const releases = db.getReleasesForProduct(req.params.productId);
     res.json(releases);
 });
 
@@ -84,10 +79,13 @@ router.get('/:productId', (req, res, next) => {
  *          in: formData
  *          type: string
  *          required: true
- *        - name: type
- *          description: notification type like info or request
+ *        - name: notes
+ *          description: array of release notes
  *          in: formData
- *          type: array
+ *          schema:
+ *              type: array
+ *              items:
+ *                  type: string
  *          required: false
  *        responses:
  *          200:
@@ -100,17 +98,15 @@ router.post('/', (req, res, next) => {
         id: uuid.v4(),
         releaseDate: req.body.releaseDate,
         version: req.body.version,
-        notes: req.body.notes
+        notes: !Array.isArray(req.body.notes) ? req.body.notes.split('\n') : req.body.notes
     };
-    for(let i=0; i < db.products.length; i++) {
-        if(db.products[i].id === req.body.productId) {
-            console.log("found");
-            db.products[i].releases.push(release);
-            console.log("final", db);
-        }
+    console.log(release);
+    try
+    {
+       const returnVal = db.addReleaseToProduct(req.body.productId, release);
+        res.status(200).json(returnVal);
     }
-    fs.writeFile('./../db.json', JSON.stringify(db), (error) => {console.log("finish", error)});
-    res.status(200).json(release);
+    catch(err) { next(err); }
 });
 
 module.exports = router
