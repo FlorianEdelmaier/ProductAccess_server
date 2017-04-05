@@ -94,11 +94,12 @@ router.get('/:productId', (req, res, next) => {
  *              $ref: '#/definitions/Release'
  */
 router.post('/', (req, res, next) => {
+    const separators = ['\n', ','];
     let release = {
         id: uuid.v4(),
         releaseDate: req.body.releaseDate,
         version: req.body.version,
-        notes: !Array.isArray(req.body.notes) ? req.body.notes.split('\n') : req.body.notes
+        notes: !Array.isArray(req.body.notes) ? req.body.notes.split(new RegExp(separators.join('|'), 'g')) : req.body.notes
     };
     console.log(release);
     try
