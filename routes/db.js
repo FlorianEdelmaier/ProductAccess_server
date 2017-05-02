@@ -1,20 +1,30 @@
 'use strict';
+const fs = require('fs');
 const db = require('./db.json');
 
-class DbFakeServer {
+class DbFileServer {
     constructor() {
-        this.data = db.products;
+        //this.data = db.products;
     }
 
     getAllProducts() {
-        return this.data.map(v => {
-            return {
-                id: v.id,
-                name: v.name,
-                description: v.description,
-                link: v.link
+        return new Promise((resolve, reject) => {
+            fs.readFile('./db.json', (err, buf) => {
+                if(err) reject(err);
+                try {
+                    const data = JSON.parse(buf.toString());
+                    return data.products.map(v => {
+                        return {
+                            id: v.id,
+                            name: v.name,
+                            description: v.description,
+                            link: v.link
+                        }
+                })
             }
-        });
+            catch(e) { reject(e) }
+            })
+        })
     }
 
     getReleasesForProduct(productId) {
@@ -37,4 +47,4 @@ class DbFakeServer {
     }
 }
 
-module.exports = new DbFakeServer();
+module.exports = new DbFileServer();

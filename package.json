@@ -4,7 +4,8 @@
   "description": "fake implementation",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:unit": "node_modules/.bin/mocha --opts mocha.opts",
+    "test:unit:cov": "node_modules/.bin/istanbul cover node_modules/mocha/.bin/_mocha -- --opts mocha.opts",
     "start": "node server.js"
   },
   "repository": {
@@ -20,12 +21,18 @@
   "dependencies": {
     "args": "2.4.1",
     "body-parser": "1.17.1",
-    "combine-validators": "^2.1.1",
+    "combine-validators": "2.1.1",
     "compression": "1.6.2",
     "cors": "2.8.3",
     "express": "4.15.2",
     "morgan": "1.8.1",
     "swagger-jsdoc": "1.9.2",
     "uuid": "3.0.1"
+  },
+  "devDependencies": {
+    "expect": "1.20.2",
+    "expect-express": "1.2.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.3.0"
   }
 }
