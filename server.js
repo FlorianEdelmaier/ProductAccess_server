@@ -1,11 +1,11 @@
 'use strict';
 const express = require('express');
 const app = require('./app');
-const config = require('./config');
+const config = require('./common/config').load('./app.yml');
 const args = require('args');
 
 args
-  .option('port', 'The port on which the app will be running', config.server.PORT);
+  .option('port', 'The port on which the app will be running', config.server.port);
 
 const flags = args.parse(process.argv)
 

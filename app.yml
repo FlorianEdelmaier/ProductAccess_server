@@ -1,0 +1,10 @@
+version:  1.0.0
+server:
+    port: 3000
+swagger:
+    info:
+        title: AppDock Server
+        version: 1.0.0
+        description: AppDock server API description
+    host: localhost:3000
+    basePath: /

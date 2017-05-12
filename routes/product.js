@@ -20,6 +20,9 @@ const router = require('express').Router();
  *      link:
  *        type: string
  *        description: Url to product
+ *      state:
+ *        type: string
+ *        description: current state
  */
 
 /**
