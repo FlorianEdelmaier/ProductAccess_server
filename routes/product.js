@@ -1,6 +1,7 @@
 'use strict';
-const db = require('./db');
+// const db = require('./db');
 const router = require('express').Router();
+const db = require('./../data/db.js');
 
 /**
  * @swagger
@@ -42,9 +43,11 @@ const router = require('express').Router();
  *            items:
  *              $ref: '#/definitions/Product'
  */
-router.get('/', (req, res) => {
-    const products = db.getAllProducts();
-    res.json(products);
+router.get('/', async (req, res, next) => {
+    try {
+        const test = await db.get("SELECT * FROM Products");
+        res.json(test);
+    } catch(ex) { next(ex); }
 });
 
 module.exports = router
