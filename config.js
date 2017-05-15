@@ -7,6 +7,9 @@ module.exports = {
     "server": {
         "PORT": PORT,
     },
+    "db": {
+        "name": "appdock"
+    },
     "swagger": {
         "info": {
             "title": 'Product Access Server',
