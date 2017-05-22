@@ -6,7 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./common/error');
 const swaggerJSDoc = require('swagger-jsdoc');
-const config = require('./config.js');
+const config = require('./common/config').load('./app.yml');
 
 const app = express();
 

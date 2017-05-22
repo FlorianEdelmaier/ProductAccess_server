@@ -2,8 +2,8 @@
 const db = require('sqlite');
 
 try {
-    db.open('./test.db', {Promise});
-    db.migrate({force: 'last'});
+    db.open('./data/test.sqlite', {Promise});
+    db.migrate();
 }
 catch(err) { throw err; }
 

@@ -1,6 +1,6 @@
 'use strict';
 const router = require('express').Router();
-const config = require('./../config.js');
+const config = require('./../common/config').load('./app.yml');
 
 /**
  * @swagger
@@ -18,7 +18,7 @@ const config = require('./../config.js');
  *            type: string
  */
 router.get('/', (req, res) => {
-    res.json({version: config.VERSION});
+    res.json({version: config.version});
 });
 
 module.exports = router;
