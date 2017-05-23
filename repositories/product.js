@@ -6,7 +6,7 @@ exports.validProductTypes = ['Finance & Controlling', 'HR & organisational devel
 exports.validProductStates = ['up', 'down', 'maintenance'];
 
 exports.findAll = () => {
-    return db.all('SELECT * FROM Product ORDER BY name');
+    return db.all('SELECT id, name, description, link, status, type FROM Product ORDER BY name');
 }
 
 exports.findById = (id) => {
@@ -21,6 +21,6 @@ exports.update = (id, name, description, link, status, type) => {
     return db.run(`UPDATE Product SET name = '${name}', description = '${description}', link = '${link}', status = '${status}', type = '${type}' WHERE id = ${id}`);
 }
 
-exports.setState = (id, state) => {
-    return db.run(`UPDATE Product SET status = ${status} WHERE id = ${id}`)
+exports.setState = (id, status) => {
+    return db.run(`UPDATE Product SET status = '${status}' WHERE id = ${id}`)
 }

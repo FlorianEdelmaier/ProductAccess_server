@@ -66,8 +66,9 @@ exports.setProductState = async (req, res, next) => {
     }
     else {
         try {
-            const status = await productRepo.setState(req.body.id, req.body.status);
-            res.json(status);
+            const returnValue = await productRepo.setState(req.body.id, req.body.status);
+            const product = await productRepo.findById(req.body.id);
+            res.json(product);
         } catch(err) { next(err); }
     }
 }

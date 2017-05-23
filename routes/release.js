@@ -1,9 +1,7 @@
 'use strict';
-const db = require('./db');
 const router = require('express').Router();
-const uuid = require('uuid');
-const Validator = require('combine-validators');
-const validations = Validator.validations;
+const controller = require('./../controllers/release');
+
 
 /**
  * @swagger
@@ -12,8 +10,11 @@ const validations = Validator.validations;
  *    type: object
  *    properties:
  *      id:
- *        type: string
- *        description: unique identifier
+ *        type: integer
+ *        description: primary key
+ *      productId:
+ *        type: integer
+ *        description: foreign key to Product
  *      releaseDate:
  *        type: string
  *        description: date of release
@@ -37,7 +38,7 @@ const validations = Validator.validations;
  *      - application/json
  *      parameters:
  *      - name: productId
- *        description: unique identifier of given product
+ *        description: id of given product
  *        in: path
  *        required: true
  *        type: string
@@ -50,17 +51,7 @@ const validations = Validator.validations;
  *                $ref: '#/definitions/Release'
  */
 
-router.get('/:productId', (req, res, next) => {
-    const v = new Validator();
-    v.check(validations.isMandatory, validations.isUUID)(req.params, 'productId', 'ProductID not valid');
-    if(v.hasErrors()) { 
-        res.status(400).json({ errors: v.errors });
-    }
-    else {
-        const releases = db.getReleasesForProduct(req.params.productId);
-        res.json(releases);
-    }
-});
+router.get('/:productId', controller.getAllReleasesForProduct);
 
 /**
  * @swagger
@@ -76,11 +67,11 @@ router.get('/:productId', (req, res, next) => {
  *          description: id of product
  *          in: formData
  *          required: true
- *          type: string
+ *          type: integer
  *        - name: releaseDate
  *          description: date of release
  *          in: formData
- *          required: true
+ *          required: false
  *          type: string
  *        - name: version
  *          description: version string
@@ -101,29 +92,6 @@ router.get('/:productId', (req, res, next) => {
  *            schema:
  *              $ref: '#/definitions/Release'
  */
-router.post('/', (req, res, next) => {
-    const v = new Validator();
-    v.check(validations.isMandatory, validations.isUUID)(req.body, 'productId', 'ProductID not valid');
-    v.check(validations.isMandatory)(req.body, 'releaseDate', 'ReleaseData was not provided');
-    v.check(validations.isMandatory)(req.body, 'version', 'Version was not provided');
-    if(v.hasErrors()) { 
-        res.status(400).json({ errors: v.errors });
-    }
-    else {
-        const separators = ['\n', ','];
-        let release = {
-            id: uuid.v4(),
-            releaseDate: req.body.releaseDate,
-            version: req.body.version,
-            notes: !Array.isArray(req.body.notes) ? req.body.notes.split(new RegExp(separators.join('|'), 'g')) : req.body.notes
-        };
-        try
-        {
-            const returnVal = db.addReleaseToProduct(req.body.productId, release);
-            res.status(200).json(returnVal);
-        }
-        catch(err) { next(err); }
-    }
-    });
+router.post('/', controller.createRelease);
 
 module.exports = router
