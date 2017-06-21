@@ -204,4 +204,27 @@ router.get('/status', controller.getAllProductStates);
  */
 router.get('/type', controller.getAllProductTypes);
 
+/**
+ * @swagger
+ * /api/product:
+ *      delete:
+ *        tags:
+ *        - product
+ *        description: delete product by primary key
+ *        produces:
+ *        - application/json
+ *        parameters:
+ *        - name: id
+ *          description: id of product
+ *          in: formData
+ *          required: true
+ *          type: integer
+ *        responses:
+ *          200:
+ *            description: returns deleted product
+ *            schema:
+ *              $ref: '#/definitions/Product'
+ */
+router.delete('/', controller.deleteProduct);
+
 module.exports = router;

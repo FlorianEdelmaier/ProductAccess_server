@@ -24,3 +24,7 @@ exports.update = (id, name, description, link, status, type) => {
 exports.setState = (id, status) => {
     return db.run(`UPDATE Product SET status = '${status}' WHERE id = ${id}`)
 }
+
+exports.delete = (id) => {
+    return db.run(`DELETE FROM Product WHERE id = ${id}`);
+}

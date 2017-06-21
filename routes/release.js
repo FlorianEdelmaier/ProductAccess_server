@@ -94,4 +94,27 @@ router.get('/:productId', controller.getAllReleasesForProduct);
  */
 router.post('/', controller.createRelease);
 
+/**
+ * @swagger
+ * /api/release:
+ *    delete:
+ *        tags:
+ *        - release
+ *        description: delete release
+ *        produces:
+ *        - application/json
+ *        parameters:
+ *        - name: id
+ *          description: primary key of release
+ *          in: formData
+ *          required: true
+ *          type: integer
+ *        responses:
+ *          200:
+ *            description: returns deleted release
+ *            schema:
+ *              $ref: '#/definitions/Release'
+ */
+router.delete('/', controller.delete);
+
 module.exports = router

@@ -72,3 +72,18 @@ exports.setProductState = async (req, res, next) => {
         } catch(err) { next(err); }
     }
 }
+
+exports.deleteProduct = async (req, res, next) => {
+    const v = new Validator();
+    v.check(validations.isMandatory)(req.body, 'id', 'id is mandatory');
+    if(v.hasErrors()) {
+        res.status(400).json({ errors: v.errors });
+    }
+    else {
+        try {
+            const product = await productRepo.findById(req.body.id);
+            const returnValue = await productRepo.delete(req.body.id);
+            return product;
+        } catch(err) { next(err); }
+    }
+}
