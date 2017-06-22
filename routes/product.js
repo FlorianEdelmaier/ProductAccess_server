@@ -49,6 +49,31 @@ router.get('/', controller.getAllProducts);
 
 /**
  * @swagger
+ * /api/product/{type}:
+ *    get:
+ *      tags:
+ *      - product
+ *      description: Returns all products for given type
+ *      parameters:
+ *      - name: type
+ *        description: type of product
+ *        in: path
+ *        required: true
+ *        type: string
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: array of products
+ *          schema:
+ *            type: array
+ *            items:
+ *              $ref: '#/definitions/Product'
+ */
+router.get('/:type', controller.getProductsByType);
+
+/**
+ * @swagger
  * /api/product:
  *      post:
  *        tags:

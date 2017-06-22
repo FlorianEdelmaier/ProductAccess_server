@@ -9,6 +9,10 @@ exports.findAll = () => {
     return db.all('SELECT id, name, description, link, status, type FROM Product ORDER BY name');
 }
 
+exports.findByType = (type) => {
+    return db.all(`SELECT * FROM Product WHERE type = ${type} ORDER BY name`);
+}
+
 exports.findById = (id) => {
     return db.get(`SELECT * FROM Product WHERE id = ${id}`);
 }

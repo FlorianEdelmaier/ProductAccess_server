@@ -10,6 +10,20 @@ exports.getAllProducts = async (req, res, next) => {
     } catch(err) { next(err); }
 }
 
+exports.getProductsByType = async (req, res, next) => {
+    const v = new Validator();
+    v.check(validations.isMandatory)(req.params, 'type', 'type is mandatory');
+    if(v.hasErrors()) {
+        res.status(400).json({ errors: v.errors });
+    }
+    else {
+        try {
+            const products = await productRepo.findByType(req.params.type);
+            res.json(products);
+        } catch(err) { next(err); }
+    }
+}
+
 exports.getAllProductStates = (req, res, next) => {
     res.json(productRepo.validProductStates);
 }
