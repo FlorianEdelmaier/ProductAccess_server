@@ -227,4 +227,19 @@ router.get('/type', controller.getAllProductTypes);
  */
 router.delete('/', controller.deleteProduct);
 
+/**
+ * @swagger
+ * /api/product/overview:
+ *      get:
+ *        tags:
+ *        - product
+ *        description: get tile information
+ *        produces:
+ *        - application/json
+ *        responses:
+ *          200:
+ *            description: returns tile information
+ */
+router.get('/overview', controller.getOverview);
+
 module.exports = router;

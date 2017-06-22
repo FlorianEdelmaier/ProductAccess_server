@@ -83,7 +83,14 @@ exports.deleteProduct = async (req, res, next) => {
         try {
             const product = await productRepo.findById(req.body.id);
             const returnValue = await productRepo.delete(req.body.id);
-            return product;
+            res.json(product);
         } catch(err) { next(err); }
     }
+}
+
+exports.getOverview = async (req, res, next) => {
+    try {
+        const tiles = await productRepo.getProductOverview();
+        res.json(tiles);
+    } catch(err) { next(err); }
 }

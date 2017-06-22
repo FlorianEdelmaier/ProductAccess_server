@@ -28,3 +28,7 @@ exports.setState = (id, status) => {
 exports.delete = (id) => {
     return db.run(`DELETE FROM Product WHERE id = ${id}`);
 }
+
+exports.getProductOverview = () => {
+    return db.all(`SELECT p.type, ( SELECT COUNT(*) FROM Product WHERE status = 'up'  AND type = p.type) AS CountUp, ( SELECT COUNT(*) FROM Product WHERE status = 'maintenance' AND type = p.type) AS CountMaintenance, ( SELECT COUNT(*) FROM Product WHERE status = 'down' AND type = p.type) AS CountDown FROM Product AS p GROUP BY type`);
+}

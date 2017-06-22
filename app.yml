@@ -1,6 +1,7 @@
 version:  1.0.0
 server:
     port: 3000
+db: test
 swagger:
     info:
         title: AppDock Server
