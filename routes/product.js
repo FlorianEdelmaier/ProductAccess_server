@@ -20,6 +20,15 @@ const controller = require('./../controllers/product');
  *      link:
  *        type: string
  *        description: Url to product
+ *      linkUserManual:
+ *        type: string
+ *        description: Url to UserManual
+ *      linkSupportSite:
+ *        type: string
+ *        description: Url to SupportSite
+ *      linkMarketingDoc:
+ *        type: string
+ *        description: Url to MarketingDoc
  *      state:
  *        type: string
  *        description: current state
@@ -97,6 +106,21 @@ router.get('/:type', controller.getProductsByType);
  *          in: formData
  *          type: string
  *          required: false
+ *        - name: linkUserManual
+ *          description: link to UserManual
+ *          in: formData
+ *          type: string
+ *          required: false
+ *        - name: linkSupportSite
+ *          description: link to SupportSite
+ *          in: formData
+ *          type: string
+ *          required: false
+ *        - name: linkMarketingDoc
+ *          description: link to MarketingDoc
+ *          in: formData
+ *          type: string
+ *          required: false
  *        - name: status
  *          description: status of product
  *          in: formData
@@ -142,6 +166,21 @@ router.post('/', controller.createProduct);
  *          type: string
  *        - name: link
  *          description: link to product
+ *          in: formData
+ *          type: string
+ *          required: false
+ *        - name: linkUserManual
+ *          description: link to UserManual
+ *          in: formData
+ *          type: string
+ *          required: false
+ *        - name: linkSupportSite
+ *          description: link to SupportSite
+ *          in: formData
+ *          type: string
+ *          required: false
+ *        - name: linkMarketingDoc
+ *          description: link to MarketingDoc
  *          in: formData
  *          type: string
  *          required: false
@@ -193,7 +232,7 @@ router.patch('/status', controller.setProductState);
 
 /**
  * @swagger
- * /api/product/status:
+ * /api/product/dim/status:
  *      get:
  *        tags:
  *        - product
@@ -208,11 +247,11 @@ router.patch('/status', controller.setProductState);
  *              items:
  *                type: string
  */
-router.get('/status', controller.getAllProductStates);
+router.get('/dim/status', controller.getAllProductStates);
 
 /**
  * @swagger
- * /api/product/type:
+ * /api/product/dim/type:
  *      get:
  *        tags:
  *        - product
@@ -227,7 +266,7 @@ router.get('/status', controller.getAllProductStates);
  *              items:
  *                type: string
  */
-router.get('/type', controller.getAllProductTypes);
+router.get('/dim/type', controller.getAllProductTypes);
 
 /**
  * @swagger
@@ -254,7 +293,7 @@ router.delete('/', controller.deleteProduct);
 
 /**
  * @swagger
- * /api/product/overview:
+ * /api/product/aggregate/overview:
  *      get:
  *        tags:
  *        - product
@@ -265,6 +304,6 @@ router.delete('/', controller.deleteProduct);
  *          200:
  *            description: returns tile information
  */
-router.get('/overview', controller.getOverview);
+router.get('/aggregate/overview', controller.getOverview);
 
 module.exports = router;

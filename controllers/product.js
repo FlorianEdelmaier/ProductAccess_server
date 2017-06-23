@@ -37,6 +37,9 @@ exports.createProduct = async (req, res, next) => {
     v.check(validations.isMandatory)(req.body, 'name', 'name is mandatory');
     v.check(validations.isOptional)(req.body, 'description', 'description throws error');
     v.check(validations.isOptional, validations.isURL)(req.body, 'link', 'link has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkUserManual', 'linkUserManual has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkSupportSite', 'linkSupportSite has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkMarketingDoc', 'linkMarketingDoc has to be a valid URL');
     v.check(validations.isOptional, validations.isIn(productRepo.validProductStates))(req.body, 'status', 'status needs to be valid');
     v.check(validations.isMandatory, validations.isIn(productRepo.validProductTypes))(req.body, 'type', 'type needs to be valid');
     if(v.hasErrors()) {
@@ -44,7 +47,7 @@ exports.createProduct = async (req, res, next) => {
     }
     else {
         try {
-            const returnValue = await productRepo.add(req.body.name, req.body.description, req.body.link, req.body.status, req.body.type);
+            const returnValue = await productRepo.add(req.body.name, req.body.description, req.body.link, req.body.linkUserManual, req.body.linkSupportSite, req.body.linkMarketingDoc, req.body.status, req.body.type);
             const product = await productRepo.findById(returnValue.lastID);
             res.json(product);
         } catch(err) { next(err); }
@@ -57,6 +60,9 @@ exports.updateProduct = async (req, res, next) => {
     v.check(validations.isMandatory)(req.body, 'name', 'name is mandatory');
     v.check(validations.isOptional)(req.body, 'description', 'description throws error');
     v.check(validations.isOptional, validations.isURL)(req.body, 'link', 'link has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkUserManual', 'linkUserManual has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkSupportSite', 'linkSupportSite has to be a valid URL');
+    v.check(validations.isOptional, validations.isURL)(req.body, 'linkMarketingDoc', 'linkMarketingDoc has to be a valid URL');
     v.check(validations.isOptional, validations.isIn(productRepo.validProductStates))(req.body, 'status', 'status needs to be valid');
     v.check(validations.isMandatory, validations.isIn(productRepo.validProductTypes))(req.body, 'type', 'type needs to be valid');
     if(v.hasErrors()) {
@@ -64,7 +70,7 @@ exports.updateProduct = async (req, res, next) => {
     }
     else {
         try {
-            const returnValue = await productRepo.update(req.body.id, req.body.name, req.body.description, req.body.link, req.body.status, req.body.type);
+            const returnValue = await productRepo.update(req.body.id, req.body.name, req.body.description, req.body.link, req.body.linkUserManual, req.body.linkSupportSite, req.body.linkMarketingDoc, req.body.status, req.body.type);
             const product = await productRepo.findById(req.body.id);
             res.json(product);
         } catch(err) { next(err); }
@@ -105,6 +111,7 @@ exports.deleteProduct = async (req, res, next) => {
 exports.getOverview = async (req, res, next) => {
     try {
         const tiles = await productRepo.getProductOverview();
+        console.log("tiles", tiles);
         res.json(tiles);
     } catch(err) { next(err); }
 }
