@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 
 app.use('/api/product', require('./routes/product'));
 app.use('/api/release', require('./routes/release'));
+app.use('/api/login', require('./routes/login'));
 app.use('/api/version', require('./routes/version'));
 
 app.use(errorHandler);
