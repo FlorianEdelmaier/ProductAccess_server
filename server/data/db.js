@@ -4,9 +4,9 @@ const config = require('./../common/config').load('./app.yml');
 
 try {
     if(config.db === 'test')
-        db.open('./data/test.sqlite', {Promise});
+        db.open('./server/data/test.sqlite', {Promise});
     else
-        db.open('./data/app.sqlite', {Promise});
+        db.open('./server/data/app.sqlite', {Promise});
     db.migrate();
 }
 catch(err) { throw err; }
