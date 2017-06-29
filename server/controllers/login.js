@@ -19,8 +19,10 @@ exports.login = async (req, res, next) => {
     }
     else {
         try {
-            const resp = (req.body.pwd === "Imst1949!" && validEmails.includes(req.body.email)).toString();
-            res.json({success: resp});
+            if (req.body.pwd === "Imst1949!" && validEmails.includes(req.body.email)) {
+                res.json({ success: true, user: { email: req.body.email, groups: ['admin'] }})
+            }
+            res.json({success: false, user: null });
         } catch(err) { next(err); }
     }
 }

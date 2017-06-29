@@ -4,6 +4,21 @@ const router = require('express').Router();
 
 /**
  * @swagger
+ * definition:
+ *  User:
+ *    type: object
+ *    properties:
+ *      email:
+ *        type: string
+ *        description: name of product
+ *      groups:
+ *        type: array
+ *        items:
+ *          type: string
+ */
+
+/**
+ * @swagger
  * /api/login:
  *    post:
  *      tags:
@@ -24,9 +39,9 @@ const router = require('express').Router();
  *        type: string
  *      responses:
  *        200:
- *          description: A status string
+ *          description: A user string
  *          schema:
- *            type: string
+ *            $ref: '#/definitions/User'
  */
 router.post('/', loginController.login);
 
