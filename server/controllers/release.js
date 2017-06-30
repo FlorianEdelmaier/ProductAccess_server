@@ -22,7 +22,7 @@ exports.createRelease = async (req, res, next) => {
     v.check(validations.isMandatory, validations.isNumeric)(req.body, 'productId', 'ProductID not valid');
     v.check(validations.isOptional)(req.body, 'releaseDate', 'ReleaseDate is optional');
     v.check(validations.isMandatory)(req.body, 'version', 'Version was not provided');
-    v.check(validations.notes)(req.body, 'notes', 'notes are optional');
+    v.check(validations.isOptional)(req.body, 'notes', 'notes are optional');
     if(v.hasErrors()) { 
         res.status(400).json({ errors: v.errors });
     }

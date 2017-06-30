@@ -12,7 +12,8 @@ exports.findById = async (id) => {
     return release;
 }
 
-exports.create = (productId, releaseDate, version, notesArray) => {
+exports.create = (productId, releaseDate, version, notes) => {
+    let notesArray = [].concat(notes);
     console.log("notes",notesArray, typeof notesArray)
     return db.run(`INSERT INTO Release (productId, releaseDate, version, notes) VALUES (${productId}, '${releaseDate}', '${version}', '${notesArray.join('|')}')`)
 }
